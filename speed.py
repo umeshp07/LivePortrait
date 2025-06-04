@@ -66,14 +66,14 @@ def load_and_compile_models(cfg, model_config):
     compiled_models = {}
     for name, model in models_with_params:
         model = model.half()
-        model = torch.compile(model, mode='max-autotune')  # Optimize for inference
+        model = torch.compile(model, mode='reduce-overhead')  # Optimize for inference
         model.eval()  # Switch to evaluation mode
         compiled_models[name] = model
 
     retargeting_models = ['stitching', 'eye', 'lip']
     for retarget in retargeting_models:
         module = stitching_retargeting_module[retarget].half()
-        module = torch.compile(module, mode='max-autotune')  # Optimize for inference
+        module = torch.compile(module, mode='reduce-overhead')  # Optimize for inference
         module.eval()  # Switch to evaluation mode
         stitching_retargeting_module[retarget] = module
 
