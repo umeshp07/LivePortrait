@@ -19,6 +19,7 @@ def partial_fields(target_class, kwargs):
 
 
 def fast_check_ffmpeg():
+    if not hasattr(fast_check_ffmpeg, "_cached_result"): 
     try:
         subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True)
         return True
